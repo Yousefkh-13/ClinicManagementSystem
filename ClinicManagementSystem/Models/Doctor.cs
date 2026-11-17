@@ -8,6 +8,8 @@ namespace ClinicManagementSystem.Models
         [MaxLength(200)]
         public string? WorkingHours { get; set; }
 
+        public bool IsDeleted { get; set; } = false;
+
         // Foreign Keys
         public int UserId { get; set; }
         [ForeignKey("UserId")]

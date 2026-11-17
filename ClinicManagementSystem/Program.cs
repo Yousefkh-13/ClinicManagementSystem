@@ -1,4 +1,4 @@
-using Microsoft.EntityFrameworkCore;
+using ClinicManagementSystem.Repositories;
 
 namespace ClinicManagementSystem
 {
@@ -13,6 +13,8 @@ namespace ClinicManagementSystem
 
             builder.Services.AddDbContext<ClinicManagementSystem.Data.ApplicationDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             var app = builder.Build();
 

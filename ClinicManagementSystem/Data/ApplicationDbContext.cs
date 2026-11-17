@@ -1,7 +1,4 @@
-﻿using ClinicManagementSystem.Models;
-using Microsoft.EntityFrameworkCore;
-
-namespace ClinicManagementSystem.Data
+﻿namespace ClinicManagementSystem.Data
 {
     public class ApplicationDbContext : DbContext
     {
@@ -21,19 +18,9 @@ namespace ClinicManagementSystem.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            // Unique Constraints
-            modelBuilder.Entity<User>().HasIndex(u => u.Email).IsUnique();
+            // Apply configurations from the assembly containing the ApplicationDbContext
+            modelBuilder.ApplyConfigurationsFromAssembly(typeof(ApplicationDbContext).Assembly);
 
-            modelBuilder.Entity<Patient>().HasIndex(p => p.NationalId).IsUnique();
-
-            // Prevent Multiple Cascade Paths in SQL Server
-            modelBuilder.Entity<Appointment>().HasOne(a => a.Doctor).WithMany(d => d.Appointments).HasForeignKey(a => a.DoctorId).OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Appointment>().HasOne(a => a.CreatedByUser).WithMany(u => u.CreatedAppointments).HasForeignKey(a => a.CreatedByUserId).OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Appointment>().HasOne(a => a.Patient).WithMany(p => p.Appointments).HasForeignKey(a => a.PatientId).OnDelete(DeleteBehavior.Restrict);
-
-            modelBuilder.Entity<Specialty>().Property(s => s.CheckupPrice).HasColumnType("decimal(18,2)");
         }
     }
 }

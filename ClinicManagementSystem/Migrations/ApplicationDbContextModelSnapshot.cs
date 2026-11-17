@@ -16,7 +16,7 @@ partial class ApplicationDbContextModelSnapshot : ModelSnapshot
     // If you encounter a merge conflict in the line below, it means you need to
     // discard one of the migration branches and recreate its migrations on top of
     // the other branch. See https://aka.ms/efcore-docs-migrations-conflicts for more info.
-    public override string LastMigrationId => "20261116174215_InitialCreate";
+    public override string LastMigrationId => "20261117174900_AddSoftDeleteAndEntityConfigurations";
 
     protected override void BuildModel(ModelBuilder modelBuilder)
     {
@@ -73,6 +73,9 @@ partial class ApplicationDbContextModelSnapshot : ModelSnapshot
                     .HasColumnType("int");
 
                 SqlServerPropertyBuilderExtensions.UseIdentityColumn(id);
+
+                b.Property<bool>("IsDeleted")
+                    .HasColumnType("bit");
 
                 b.Property<int>("SpecialtyId")
                     .HasColumnType("int");
@@ -269,7 +272,7 @@ partial class ApplicationDbContextModelSnapshot : ModelSnapshot
                 b.HasOne("ClinicManagementSystem.Models.Specialty", "Specialty")
                     .WithMany("Doctors")
                     .HasForeignKey("SpecialtyId")
-                    .OnDelete(DeleteBehavior.Cascade)
+                    .OnDelete(DeleteBehavior.Restrict)
                     .IsRequired();
 
                 b.HasOne("ClinicManagementSystem.Models.User", "User")
