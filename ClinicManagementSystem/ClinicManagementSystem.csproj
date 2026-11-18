@@ -15,4 +15,10 @@
 		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="11.0.0" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <Folder Include="Enums\" />
+	  <Folder Include="ViewModels\" />
+	  <Folder Include="Areas\" />
+	</ItemGroup>
+
 </Project>

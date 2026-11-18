@@ -1,4 +1,5 @@
 using ClinicManagementSystem.Repositories;
+using ClinicManagementSystem.Repositories.IRepositories;
 
 namespace ClinicManagementSystem
 {
@@ -11,10 +12,19 @@ namespace ClinicManagementSystem
             // Add services to the container.
             builder.Services.AddControllersWithViews();
 
+
             builder.Services.AddDbContext<ClinicManagementSystem.Data.ApplicationDbContext>(options =>
             options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-            builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
+            builder.Services.AddScoped<IRepository<User>, Repository<User>>();
+            builder.Services.AddScoped<IRepository<Specialty>, Repository<Specialty>>();
+            builder.Services.AddScoped<IRepository<Doctor>, Repository<Doctor>>();
+            builder.Services.AddScoped<IRepository<Patient>, Repository<Patient>>();
+            builder.Services.AddScoped<IRepository<Appointment>, Repository<Appointment>>();
+            builder.Services.AddScoped<IRepository<MedicalRecord>, Repository<MedicalRecord>>();
+
+
+            //builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 
             var app = builder.Build();
 
